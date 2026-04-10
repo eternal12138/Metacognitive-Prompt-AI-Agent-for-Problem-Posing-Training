@@ -1,0 +1,271 @@
+
+        /* ================= 基础重置与 Minia 背景增强 ================= */
+        body {
+            margin: 0;
+            font-family: 'Helvetica Neue', Helvetica, 'Microsoft Yahei', 'PingFang SC', sans-serif;
+            
+            /* 3. 改进：在原有浅灰蓝背景上增加极其微弱的几何纹理，消除单调感 */
+            background-color: #f8f8fb;
+            background-image: 
+                linear-gradient(120deg, rgba(81, 86, 190, 0.02) 25%, transparent 25%),
+                linear-gradient(120deg, transparent 75%, rgba(81, 86, 190, 0.02) 75%);
+            background-size: 80px 80px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #495057;
+            overflow: hidden;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Helvetica Neue', Helvetica, 'Microsoft Yahei', 'PingFang SC', sans-serif;
+            
+            /* 3. 改进：引入高清教育科技感背景图 */
+            background-image: url('images/login_bg.png');
+            background-size: cover; /* 图片自动覆盖全屏 */
+            background-position: center; /* 图片始终居中呈现 */
+            background-attachment: fixed; /* 滚动页面时背景静止，产生视差感 */
+            
+            /* 使用 Flex 布局让登录卡片绝对居中 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #495057;
+            overflow: hidden;
+            
+            */
+        }
+
+        /* 登录框容器 */
+        .login-container {
+            width: 100%;
+            max-width: 420px;
+            padding: 15px;
+            animation: fadeInDown 0.5s ease-out; /* 增加页面载入动画 */
+        }
+
+        /* 卡片主体 */
+        .card {
+            background: #fff;
+            border: none;
+            border-radius: 16px; /* 3. 改进：圆角稍微加大，更柔和，适合初中生 */
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06); /* 3. 改进：阴影更柔和弥散 */
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        /* 鼠标悬停卡片时有微小浮起感 */
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(81, 86, 190, 0.1);
+        }
+
+        /* Minia 风格的强调色页眉 */
+        .card-header {
+            background-color: #5156be; /* 保持经典主色调 */
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            position: relative;
+        }
+        .card-header h2 { 
+            margin: 0; 
+            font-size: 24px; 
+            font-weight: 700; 
+            letter-spacing: 1.5px; 
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .card-header p { 
+            margin: 12px 0 0; 
+            font-size: 14px; 
+            opacity: 0.9; 
+            font-weight: 300;
+        }
+
+        /* 表单区域 */
+        .card-body { padding: 45px 35px; }
+        
+        /* 错误提示框 */
+        .error-msg {
+            color: #fd625e;
+            background-color: rgba(253, 98, 94, 0.1);
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            margin-bottom: 25px;
+            text-align: center;
+            border: 1px solid rgba(253, 98, 94, 0.2);
+            animation: shake 0.4s; /* 错误时轻轻震动提示 */
+        }
+
+        /* 表单组 */
+        .form-group { margin-bottom: 25px; }
+        
+        /* 标签排版（支持左右分布） */
+        .form-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 14px;
+            font-weight: 600; /* 标题加粗，更醒目 */
+            color: #343a40;
+        }
+        .form-label a { 
+            color: #74788d; 
+            text-decoration: none; 
+            font-size: 13px; 
+            font-weight: 400;
+            transition: color 0.3s; 
+        }
+        .form-label a:hover { color: #5156be; text-decoration: underline; }
+
+        /* ================= 1 & 2. 改进核心：带图标的输入框容器 ================= */
+        .input-group-with-icon {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        
+        /* 前置左侧图标 */
+        .input-group-with-icon .prefix-icon {
+            position: absolute;
+            left: 15px;
+            color: #adb5bd;
+            font-size: 16px;
+            transition: color 0.3s;
+            z-index: 10;
+        }
+
+        /* 输入框主体 */
+        .form-control {
+            width: 100%;
+            /* 1. 改进：为左侧图标腾出空间 */
+            padding: 13px 15px 13px 45px; 
+            font-size: 14px;
+            border: 1px solid #ced4da;
+            border-radius: 8px; /* 圆角增加 */
+            box-sizing: border-box;
+            transition: all 0.2s ease-in-out;
+            background-color: #fff;
+            color: #495057;
+        }
+        /* 聚焦时的 Minia 风格效果 */
+        .form-control:focus {
+            outline: none;
+            border-color: #5156be;
+            box-shadow: 0 0 0 0.15rem rgba(81, 86, 190, 0.15);
+        }
+        /* 聚焦时前置图标变色 */
+        .form-control:focus + .prefix-icon {
+            color: #5156be;
+        }
+
+        /* 2. 改进：密码可见性切换按钮 */
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            color: #adb5bd;
+            cursor: pointer;
+            padding: 5px;
+            user-select: none;
+            transition: color 0.3s;
+            z-index: 10;
+        }
+        .password-toggle:hover {
+            color: #5156be;
+        }
+
+        /* 记住我 复选框 */
+        .form-check {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .form-check-input { 
+            margin: 0 10px 0 0; 
+            cursor: pointer; 
+            width: 18px; 
+            height: 18px; 
+            accent-color: #5156be; /* 现代浏览器自定义复选框颜色 */
+        }
+        .form-check-label { 
+            font-size: 14px; 
+            color: #6c757d; 
+            cursor: pointer; 
+            user-select: none; 
+        }
+
+        /* 登录按钮 */
+        .btn-primary {
+            width: 100%;
+            padding: 13px;
+            background-color: #5156be;
+            border: 1px solid #5156be;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 600; /* 字体加粗 */
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(81, 86, 190, 0.25); /* 阴影增强 */
+            letter-spacing: 2px; /* 字母拉开，更具设计感 */
+        }
+        .btn-primary:hover { 
+            background-color: #4348a3; 
+            border-color: #4045a1; 
+            transform: translateY(-2px); /* 悬停浮起 */
+            box-shadow: 0 6px 15px rgba(81, 86, 190, 0.35);
+        }
+        .btn-primary:active { 
+            transform: translateY(0); 
+            box-shadow: 0 2px 5px rgba(81, 86, 190, 0.2);
+        }
+
+        /* 底部注册提示 */
+        /* 底部外部文本的增强清晰度设计 */
+        .footer-wrapper {
+            margin-top: 35px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+        }
+        .footer-text { 
+            font-size: 14px; 
+            color: #495057; /* 稍微加深文字颜色，增强对比度 */
+            /* 3. 改进：在多彩背景上加半透明蒙版包裹文本，确保高清晰度 */
+            background-color: rgba(248, 248, 251, 0.9);
+            padding: 10px 20px;
+            border-radius: 20px;
+            border: 1px solid rgba(225, 228, 232, 0.8);
+            display: inline-flex;
+            align-items: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+        }
+        .footer-text a { 
+            color: #5156be; 
+            text-decoration: none; 
+            font-weight: 600; 
+            margin-left: 6px; 
+            transition: all 0.3s;
+        }
+        .footer-text a:hover { 
+            text-decoration: underline; 
+            color: #4348a3;
+        }
+
+        /* ================= 动画定义 ================= */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translate3d(0, -20px, 0); }
+            to { opacity: 1; transform: translate3d(0, 0, 0); }
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-5px); }
+            40%, 80% { transform: translateX(5px); }
+        }
+    
