@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 思维助手 - 学生端</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_student.css') }}">
+    
+    
+</head>
+<body>
+
+    <div class="top-nav">
+        <div class="nav-title">探索与提问：AI 思维助手</div>
+        <div class="nav-user">
+            你好，<span style="color:#5156be; font-weight:bold;">{{ student_name }}</span> 同学！
+            <a href="/logout" class="logout-btn">退出系统</a>
+        </div>
+    </div>
+
+    <div class="app-container">
+        
+        <div class="sidebar">
+            <h2 class="task-title">📖 当前任务：{{ current_task.title }}</h2>
+            <div class="task-content">
+                {{ current_task.content }}
+            </div>
+
+            {% if current_task.scaffold and current_task.scaffold|trim != '' %}
+            <div class="scaffold-box">
+                <div class="scaffold-title"><i class="fas fa-lightbulb"></i> 灵感锦囊：高质量提问参考</div>
+                <div class="scaffold-content">
+                    {{ current_task.scaffold | replace('\n', '<br>') | safe }}
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="history-section-container">
+                <div class="history-title-text"><i class="fas fa-folder-tree"></i> 过往任务探索库</div>
+                <div id="history-accordion-container"></div>
+            </div>
+        </div>
+
+        <div class="chat-main">
+            <div class="chat-header">🎯 阅读材料，提出问题</div>
+            <div class="chat-history" id="chat-history" style="display: flex; flex-direction: column;">
+                
+                <div class="message-row ai-row">
+                    <div class="bubble ai-bubble">我是你的专属思维助手。阅读左侧的材料后，关于当前的实验任务，你首先想弄清楚什么？</div>
+                </div>
+
+                {% if chat_history %}
+                    {% for row in chat_history %}
+                        {% set task_name = row[7] if row|length > 7 else '未分类早期任务' %}
+                        {% if task_name == current_task.title %}
+                            <div class="message-row user-row" style="display: flex; justify-content: flex-end; margin-bottom: 5px;">
+                                <div class="bubble user-bubble">{{ row[3] }}</div>
+                            </div>
+                            
+                            {% if row|length > 6 and row[6] and row[6]|trim != "" %}
+                            <div class="teacher-feedback-card">
+                                <div class="feedback-header">
+                                    <span class="score-badge score-{{ row[5]|trim }}">评级: {{ row[5]|trim }}</span>
+                                    导师综合评估 <i class="fas fa-clipboard-check" style="margin-left: 6px;"></i>
+                                </div>
+                                <div class="feedback-content" style="white-space: pre-wrap; line-height: 1.6; color: #495057; margin-top: 8px;"><strong>修改建议：</strong><br>{{ row[6] }}</div>
+                            </div>
+                            {% else %}
+                                <div style="margin-bottom: 15px;"></div>
+                            {% endif %}
+
+                            <div class="message-row ai-row" style="display: flex; justify-content: flex-start; margin-bottom: 25px;">
+                                <div class="bubble ai-bubble">{{ row[4] }}</div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            <div class="input-area">
+                {% if current_task.title == '等待老师发布任务...' %}
+                    <input type="text" id="user-input" placeholder="🔒 老师还未发布探究任务，输入框已锁定..." disabled style="background-color: #e9ecef; cursor: not-allowed;">
+                    <button class="send-btn" disabled>禁止发送</button>
+                {% else %}
+                    <input type="text" id="user-input" placeholder="针对当前实验输入你想探究的问题..." onkeypress="handleKeyPress(event)">
+                    <button class="send-btn" id="send-btn" onclick="sendMessage()">发送</button>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <script id="student-records-data" type="application/json">
+        {{ chat_history | default([]) | tojson | safe }}
+    </script>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const chatHistory = document.getElementById('chat-history');
+            chatHistory.scrollTop = chatHistory.scrollHeight;
+            renderHistoryAccordion();
+        });
+
+        // 渲染折叠抽屉 (JS 逻辑保持不变，依然稳定工作)
+        function renderHistoryAccordion() {
+            const container = document.getElementById('history-accordion-container');
+            let rawData = [];
+            try {
+                const jsonText = document.getElementById('student-records-data').textContent;
+                rawData = JSON.parse(jsonText);
+            } catch (e) {
+                return;
+            }
+
+            const currentTaskTitle = "{{ current_task.title }}";
+            const historyGroup = {};
+
+            rawData.forEach(row => {
+                if (row && row.length >= 5) {
+                    const taskName = row.length > 7 ? row[7] : "未分类早期任务";
+                    if (taskName !== currentTaskTitle) {
+                        if (!historyGroup[taskName]) historyGroup[taskName] = [];
+                        historyGroup[taskName].push(row);
+                    }
+                }
+            });
+
+            const taskNames = Object.keys(historyGroup);
+            if (taskNames.length === 0) {
+                container.innerHTML = '<div style="color: #adb5bd; font-size: 12px; margin-top: 10px;">暂无其他历史记录</div>';
+                return;
+            }
+
+            let html = '';
+            taskNames.forEach(task => {
+                const records = historyGroup[task];
+                html += `
+                <div class="history-folder">
+                    <div class="history-folder-header" onclick="toggleHistoryFolder(this)">
+                        <div class="history-folder-title">
+                            <i class="fas fa-book" style="margin-right:8px; color:#4f55c7;"></i> ${task} 
+                            <span style="font-size:12px; color:#adb5bd; margin-left:6px;">(${records.length})</span>
+                        </div>
+                        <i class="fas fa-chevron-down history-toggle-icon" style="color:#adb5bd; transition: transform 0.3s; font-size: 12px;"></i>
+                    </div>
+                    <div class="history-folder-content">
+                `;
+                
+                [...records].reverse().forEach(row => {
+                    const q = row[3];
+                    const score = row.length > 5 ? row[5] : "";
+                    const feedback = row.length > 6 ? row[6] : "";
+                    
+                    html += `<div class="history-item">
+                                <div class="history-q"><strong style="color:#4f55c7;">我：</strong>${q}</div>`;
+                    if (feedback && feedback.trim() !== "") {
+                        // 💡 终极修复：给评级标签加上 white-space: nowrap 和 flex-shrink: 0，死死锁住不许换行！
+                        html += `
+                            <div class="history-fb" style="margin-top: 10px; background: #f8f9fc; padding: 12px; border-radius: 8px; border-left: 4px solid #5156be;">
+                                <div style="margin-bottom: 8px; font-size: 13px; display: flex; align-items: center;">
+                                    <i class="fas fa-check-double" style="color: #5156be; margin-right: 6px;"></i> 
+                                    <strong style="color: #2e384d; flex-shrink: 0;">导师批注</strong>
+                                    <span style="background: #e0e2ff; color: #5156be; font-size: 11px; font-weight: bold; padding: 2px 6px; border-radius: 4px; margin-left: 8px; white-space: nowrap; flex-shrink: 0;">
+                                        ${score.trim()} 级
+                                    </span>
+                                </div>
+                                <div style="white-space: pre-wrap; line-height: 1.6; color: #495057; font-size: 13px;">${feedback}</div>
+                            </div>`;
+                    }
+                    html += `</div>`;
+                });
+                html += `</div></div>`;
+            });
+            container.innerHTML = html;
+        }
+
+        // 折叠抽屉的展开/收起逻辑
+        function toggleHistoryFolder(headerElement) {
+            const content = headerElement.nextElementSibling;
+            const icon = headerElement.querySelector('.history-toggle-icon');
+            if (content.style.display === 'block') {
+                content.style.display = 'none';
+                headerElement.style.backgroundColor = '#f8f9fa';
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                content.style.display = 'block';
+                headerElement.style.backgroundColor = '#f1f3f5';
+                icon.style.transform = 'rotate(180deg)';
+            }
+        }
+    </script>
+</body>
+</html>
