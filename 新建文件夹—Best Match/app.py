@@ -35,13 +35,14 @@ db = SQLAlchemy(app)
 
 # AI 大模型 API 配置 (这里以 DeepSeek 或通义千问等兼容 OpenAI 格式的接口为例)
 # 在跑通全流程前，可以先留空。如果填了真实的 Key，系统就会真正连网思考
+# **************
 
 API_KEY = "a488812c-f62c-4644-b427-7cfa14114676" 
 
 #api_key = os.getenv('ARK_API_KEY')
 
-API_URL = "https://ark.cn-beijing.volces.com/api/v3/chat/completions" # 根据申请的模型平台替换
-MODEL_NAME = "ep-m-20260322104554-lfntl" # 🌟 填入对应的模型名称，必须和云端平台上看到的一模一样！（这里的模型是 Doubao-Seed-2.0-mini）
+API_URL = "**************" # 根据申请的模型平台替换
+MODEL_NAME = "****************************" # 🌟 填入对应的模型名称，必须和云端平台上看到的一模一样！（这里的模型是 Doubao-Seed-2.0-mini）
 
 
 '''
@@ -141,8 +142,8 @@ MODEL_NAME = "qwen3-vl-lite:latest"
 # ⚠️ 这里以兼容性最好的通用 OpenAI 格式为例
 # 建议去 硅基流动(SiliconFlow) 申请免费 API Key，或者使用阿里云百炼、DeepSeek
 API_URL = "https://ark.cn-beijing.volces.com/api/v3/responses" # 以硅基流动为例
-API_KEY = "a488812c-f62c-4644-b427-7cfa14114676" # 🌟 填入你申请的真实 API Key
-MODEL_NAME = "ep-m-20260322104554-lfntl" # 🌟 填入对应的模型名称
+API_KEY = "a4**************" # 🌟 填入你申请的真实 API Key
+MODEL_NAME = "ev**************" # 🌟 填入对应的模型名称
 '''
 
 USER_DB = 'users.csv'
