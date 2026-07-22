@@ -1,4 +1,4 @@
-# Metacognitive-Prompt-AI-Agent-for-Problem-Posing-Training（获得中国大学生计算机设计大赛（4C 大赛）吉林省二等奖）
+# Metacognitive-Prompt-AI-Agent-for-Problem-Posing-Training（获得中国大学生计算机设计大赛（Chinese Collegiate Computing Competition）吉林省二等奖）
 
 一个面向初中学生问题提出能力培养的元认知提示AI智能体
 
