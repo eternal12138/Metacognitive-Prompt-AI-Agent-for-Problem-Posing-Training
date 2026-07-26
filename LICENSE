@@ -1,0 +1,20 @@
+Dual license
+============
+
+Copyright (c) 2026 Li Rui and contributors.
+
+This project is dual-licensed. You may use, copy, modify, and distribute it
+under either of the following licenses, at your option:
+
+1. GNU Affero General Public License version 3 only
+   (SPDX identifier: AGPL-3.0-only), found in
+   LICENSES/AGPL-3.0-only.txt; OR
+2. Apache License, Version 2.0
+   (SPDX identifier: Apache-2.0), found in
+   LICENSES/Apache-2.0.txt.
+
+Unless you have a separate written agreement with the copyright holder, you
+must comply with every condition of the license you select. The two license
+texts are alternatives; they are not cumulative requirements.
+
+SPDX-License-Identifier: AGPL-3.0-only OR Apache-2.0

@@ -1,35 +1,76 @@
-# Metacognitive-Prompt-AI-Agent-for-Problem-Posing-Training
+# AI 探究思维助手
 
-> 🏆 **荣誉奖项**：中国大学生计算机设计大赛（Chinese Collegiate Computing Competition）吉林省二等奖
+面向初中学生问题提出能力培养的元认知提示 AI 原型系统。
 
-## 📌 项目简介 (Project Overview)
-本项目旨在构建一个**面向初中学生问题提出能力培养的元认知提示AI智能体**。在当前核心素养体系下，学生主动提出问题、评价问题并以问题驱动学习是深度学习的关键指标。然而，传统课堂中“问题提出能力（Problem-Posing Ability）”常被忽视，学生普遍缺乏主动质疑与反思的意识。
+## 安全提示
 
-本项目切入教育技术与人工智能的前沿交叉点，利用大语言模型（LLM）的即时分析与对话能力，为学生提供实时、连续、个性化的元认知提示支架，助力学生从“被动接受答案”向“主动提出好问题”跨越。
+历史版本曾把模型服务密钥直接写在 `app.py` 中。部署前必须在相应服务商后台撤销旧密钥并创建新密钥；仅删除源码中的密钥不能使旧密钥失效。
 
-## 🎯 核心逻辑与创新点 (Core Logic & Innovations)
+正式实验涉及未成年人数据。部署者应完成伦理审批、知情同意、最小化采集、去标识化、访问控制、备份与保留期限设置，并使用 HTTPS。
 
-1. **AI作为近侧发展区支架 (ZPD Scaffolding)**
-   AI不再仅仅是解答问题的“百科全书”，而是引导思考的认知支架。通过动态交互，AI引导学生意识到“应该如何思考”，激发深层的创造性思维与批判性思维。
-2. **实时元认知提示 (Real-time Metacognitive Prompting)**
-   针对传统课堂中教师难以提供一对一、即时且连续反馈的痛点，AI系统能够实时提供策略提示、角度提示、深度提示（如：“你为什么这样想？”“还可能有哪些角度？”），系统性提升学生提问的质量与数量。
-3. **可持续的个性化互动 (Sustainable & Personalized Interaction)**
-   系统可根据学习者当前的认知状态和任务情境，动态调整元认知提示的介入时机与维度，避免了传统固定提示词的僵化，实现千人千面的引导。
+## 安装
 
-## ⚙️ 系统原型与技术框架 (System Prototype & Technical Framework)
-为了保障教育场景下的响应速度与数据安全，系统原型的构建注重**本土化与可控性**。
-在技术落地方面，充分发挥智能科学与技术专业的优势，底层架构可支持灵活的本地化模型部署方案（例如借助 Ollama 框架运行 Qwen、Gemma 等优质的开源大模型）进行逻辑调试与优化。这确保了AI系统既能准确理解教育指令，又能高效生成符合教学法的元认知提示支架。
+建议使用 Python 3.11 或 3.12：
 
-## 📊 实验设计与科学评价 (Methodology & Evaluation)
-本研究不仅停留在系统开发，更注重通过严谨的教育实验法验证其实际效用。
-在实证数据处理与能力评价环节，项目结合**心理测量与统计学**的方法，利用 **SPSS** 对实验前后的学生提问数据、学习表现等指标进行深度量化分析。参考经典测量理论等科学依据，构建出“本土化提示模型与评价框架”，确保对学生“问题提出能力”的测量具有良好的信效度，为教育技术实践提供坚实的数据支撑。
+```bash
+python -m venv .venv
+# Windows
+.venv\Scripts\python -m pip install -r requirements.txt
+# Linux/macOS
+.venv/bin/python -m pip install -r requirements.txt
+```
 
-## 🎓 团队背景 (Team Profile)
-团队成员由**教育技术学**、**心理学**、**计算机科学与技术**与**智能科学与技术**专业背景组成，具备极强的跨学科整合能力：
-* **教学设计与学习科学**：精通认知规律、支架理论，保障系统的教育属性。
-* **人工智能基础开发**：具备模型测试、本地部署与系统集成的技术实力。
-* **教育研究法与数据统计**：能够独立完成严谨的实验设计与量化数据分析。
+把 `.env.example` 中的变量配置到操作系统、进程管理器或容器环境。应用本身不会自动读取 `.env` 文件，避免开发配置被误当作生产配置。
 
-## 💡 学术价值与实践意义 (Significance)
-* **学术价值**：系统验证了AI辅助元认知提示对学生“问题提出能力”的影响，填补了该细分领域的实证研究空白，进一步丰富了对话式支持与提示式学习（Prompt Learning）的理论模型。
-* **实践意义**：为一线初中教学提供了一套可落地的AI辅助工具与评价标准，切实赋能基础教育，助力培养具备创新与反思能力的新时代学习者。
+生产环境必须设置：
+
+- `APP_ENV=production`
+- 至少 32 字符的随机 `FLASK_SECRET_KEY`
+- 首次部署时至少 12 字符的 `INITIAL_ADMIN_PASSWORD`
+- 批量导入账号使用的至少 10 字符 `DEFAULT_USER_PASSWORD`
+- 新生成的 `ARK_API_KEY`
+- 若启用向量记忆，则设置 `EMBEDDING_API_KEY`
+- HTTPS 部署时设置 `SESSION_COOKIE_SECURE=1`
+- 建议将 `APP_DATA_DIR` 指向源码目录外的受保护持久化目录
+
+## 启动
+
+本地 Windows 桌面模式：
+
+```powershell
+$env:APP_ENV = "development"
+$env:FLASK_SECRET_KEY = "replace-with-a-random-secret-of-at-least-32-characters"
+$env:ARK_API_KEY = "replace-with-a-new-key"
+.venv\Scripts\python.exe app.py
+```
+
+Linux 服务器：
+
+```bash
+APP_ENV=production gunicorn -c gunicorn_conf.py app:app
+```
+
+不要使用 Flask 调试服务器承载正式实验。反向代理应启用 HTTPS，并关闭对 `/chat` 的响应缓冲。
+
+## 数据与升级
+
+- 用户、聊天和任务数据默认保存在 `instance/`。
+- 旧版 `task_config.json` 只会在数据库仍为默认任务时迁移一次。
+- 旧版明文密码会在用户成功登录时自动转换为安全哈希。
+- 提交代码或发布安装包前，不要包含 `instance/`、日志、`.env` 或真实实验导出文件。
+
+## 测试
+
+```bash
+python -m unittest discover -s tests -v
+```
+
+## 许可
+
+本项目采用双重许可。使用者可以选择：
+
+- GNU Affero General Public License v3.0 only；或
+- Apache License 2.0。
+
+详见 `LICENSE`、`LICENSES/AGPL-3.0-only.txt` 和
+`LICENSES/Apache-2.0.txt`。

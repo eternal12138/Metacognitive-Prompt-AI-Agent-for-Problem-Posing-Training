@@ -1,0 +1,5 @@
+nohup: ignoring input
+Traceback (most recent call last):
+  File "/www/wwwroot/aitest/app.py", line 1, in <module>
+    from flask import Flask, render_template, request, jsonify, session, redirect, url_for, Response, stream_with_context
+ModuleNotFoundError: No module named 'flask'
