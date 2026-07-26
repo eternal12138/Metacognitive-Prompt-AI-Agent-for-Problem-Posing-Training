@@ -1,0 +1,90 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-only OR Apache-2.0 -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token }}">
+    <title>系统登录 - AI 思维助手</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_login.css') }}">
+</head>
+<body>
+
+    <div class="login-container">
+        <div class="card">
+            <div class="card-header">
+                <h2>AI 思维助手</h2>
+            </div>
+            
+            <div class="card-body">
+                {% if error %}
+                <div class="error-msg">
+                    <i class="fas fa-exclamation-circle" style="margin-right: 6px;"></i>
+                    {{ error }}
+                </div>
+                {% endif %}
+                
+                <form method="POST" action="/login">
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+                    
+                    <div class="form-group">
+                        <div class="form-label">
+                            <label for="username" style="margin: 0;">账号</label>
+                        </div>
+                        <div class="input-group-with-icon">
+                            <input type="text" class="form-control" id="username" name="username" placeholder="请输入分配的学号/用户名" required autofocus>
+                            <i class="fas fa-user prefix-icon"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="form-label">
+                            <label for="password" style="margin: 0;">密码</label>
+                            <a href="javascript:void(0);" onclick="alert('为了安全，请联系系统管理员或指导教师重置密码。')">忘记密码？</a>
+                        </div>
+                        <div class="input-group-with-icon">
+                            <input type="password" class="form-control" id="password" name="password" placeholder="请输入密码 (默认123456)" required>
+                            <i class="fas fa-lock prefix-icon"></i>
+                            <i class="fas fa-eye password-toggle" id="togglePassword"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="remember-me">
+                        <label class="form-check-label" for="remember-me">记住用户名</label>
+                    </div>
+                    
+                    <button type="submit" class="btn-primary">登 录</button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="footer-wrapper">
+            <div class="footer-text">
+                没有账号？ <a href="javascript:void(0);" onclick="alert('目前为实验教学阶段，暂未开放自主注册，请使用分配的账号。')">注册</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const togglePassword = document.querySelector('#togglePassword');
+            const passwordInput = document.querySelector('#password');
+
+            if (togglePassword && passwordInput) {
+                togglePassword.addEventListener('click', function () {
+                    // 切换输入框类型 (password <-> text)
+                    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                    passwordInput.setAttribute('type', type);
+                    
+                    // 切换眼睛图标 (eye <-> eye-slash)
+                    this.classList.toggle('fa-eye');
+                    this.classList.toggle('fa-eye-slash');
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>

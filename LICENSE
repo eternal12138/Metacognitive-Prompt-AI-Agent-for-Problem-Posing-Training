@@ -1,0 +1,28 @@
+Metacognitive Prompt AI Agent for Problem-Posing Training
+
+Copyright (c) 2026 Li Rui and contributors
+
+Dual-license notice
+===================
+
+Except where a file explicitly states otherwise, this repository is
+dual-licensed. You may use, modify, and distribute the software under either:
+
+1. GNU Affero General Public License version 3.0 only
+   SPDX identifier: AGPL-3.0-only
+   Full text: LICENSES/AGPL-3.0-only.txt
+
+OR
+
+2. Apache License, Version 2.0
+   SPDX identifier: Apache-2.0
+   Full text: LICENSES/Apache-2.0.txt
+
+You may select the license that best suits your use. You do not need to comply
+with both licenses simultaneously.
+
+The SPDX expression for files offered under this choice is:
+
+    AGPL-3.0-only OR Apache-2.0
+
+Third-party dependencies and assets remain subject to their own licenses.
