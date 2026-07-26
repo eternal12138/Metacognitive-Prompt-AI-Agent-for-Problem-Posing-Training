@@ -69,7 +69,7 @@ python -m unittest discover -s tests -v
 
 本项目采用双重许可。使用者可以选择：
 
-- GNU Affero General Public License v3.0 only；或
+- GNU Affero General Public License v3.0 only
 - Apache License 2.0。
 
 详见 `LICENSE`、`LICENSES/AGPL-3.0-only.txt` 和
