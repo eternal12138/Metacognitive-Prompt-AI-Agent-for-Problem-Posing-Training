@@ -23,11 +23,8 @@ https://www.gnu.org/licenses/agpl-3.0.html
 2. SDK, CLIENT LIBRARIES & PUBLIC APIs (Apache-2.0)
 ---------------------------------------------------
 All client libraries, public API specifications, example code, and developer 
-kits contained in the `/sdk`, `/examples`, and `/public-api` directories are 
+kits contained in the `/api_examples` and `/sdk` directories are 
 licensed under the Apache License, Version 2.0 (Apache-2.0).
-
-Developers can freely integrate these components into proprietary or commercial 
-applications without triggering copyleft requirements on their own code.
 
 See "SECTION B: Apache-2.0" below or visit:
 https://www.apache.org/licenses/LICENSE-2.0
