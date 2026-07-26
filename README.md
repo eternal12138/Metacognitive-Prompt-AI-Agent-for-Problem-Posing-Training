@@ -310,14 +310,16 @@ gunicorn -c gunicorn_conf.py app:app
 
 ---
 
-## 📜 License
 
-本项目采用双重许可：
+## 📄 License
 
-- GNU Affero General Public License v3.0
-- Apache License 2.0
+This project adopts a multi-licensing model based on component boundaries:
 
-详见项目中的 `LICENSE` 文件。
+- **Core Engine & Backend (`/src`)**: [AGPL-3.0](./LICENSE)
+- **API Examples & Developer Kits (`/api_examples`)**: [Apache-2.0](./LICENSE)
+- **Docs & Research Materials (`/docs`)**: [CC BY-NC-ND 4.0](./LICENSE)
+
+For complete license texts, please refer to the [LICENSE](./LICENSE) file.
 
 ---
 
